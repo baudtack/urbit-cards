@@ -33,5 +33,9 @@
     ?:  =((lent d) 1)
         [(snag 0 d) ds]
     =+  [rnd next]=(rads:random (lent d))
-    $(d (weld (scag rnd d) (slag +(rnd) d)), ds [(snag rnd d) ds], random next) 
+    $(d (weld (scag rnd d) (slag +(rnd) d)), ds [(snag rnd d) ds], random next)
+++  draw
+    |=  [n=@ud d=deck]
+    ^-  [hand=deck rest=deck]
+    [(scag n d) (slag n d)]
 --
