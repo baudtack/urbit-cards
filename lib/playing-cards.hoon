@@ -1,11 +1,11 @@
 !:
 |%
 ++  suit  ?(%hearts %spades %clubs %diamonds)
-+=  darc  [sut=suit val=@ud]
++$  darc  [sut=suit val=@ud]
 ++  deck  (list darc)
 ++  get-deck
     ^-  deck
-    =/  mydeck=deck  ~
+    =|  mydeck=deck
     =/  i  1
     |-
     ?:  (gth i 4)
@@ -13,7 +13,10 @@
      =/  j  1
      |-
      ?:  (lte j 13)
-         $(j +(j), mydeck [[(get-suit i) j] mydeck])
+         %=  $
+           j       +(j)
+           mydeck  [(get-suit i) j]^mydeck
+         ==
       ^$(i +(i))
 ++  get-suit
     |=  val=@ud
@@ -27,15 +30,22 @@
 ++  shuffle-deck
     |=  [d=deck entropy=@]
     ^-  deck
-    =/  ds=deck  ~
-    =+  random=~(. og entropy)
+    =|  ds=deck
+    =/  random  ~(. og entropy)
     |-
     ?:  =((lent d) 1)
-        [(snag 0 d) ds]
+        (snag 0 d)^ds
     =+  [rnd next]=(rads:random (lent d))
-    $(d (weld (scag rnd d) (slag +(rnd) d)), ds [(snag rnd d) ds], random next)
+    %=  $
+      random  next
+      ds      (snag rnd d)^ds
+      d       %+  weld
+                (scag rnd d)
+              (slag +(rnd) d)
+    ==
 ++  draw
     |=  [n=@ud d=deck]
     ^-  [hand=deck rest=deck]
-    [(scag n d) (slag n d)]
+    :-  (scag n d)
+    (slag n d)
 --
